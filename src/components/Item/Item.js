@@ -7,7 +7,7 @@ const Item = ({id, title, images, price, stock}) => {
         <div key={id} className="group relative">
          <div className="min-h-80 aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
             <img
-                src={images[0]}
+                src={images}
                 alt={title}
                 className="h-full w-full object-cover object-center lg:h-full lg:w-full"
             />
