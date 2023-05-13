@@ -1,6 +1,22 @@
+import { useContext, useState } from "react"
 import ItemCount from "../ItemCount/ItemCount"
+import {Link} from 'react-router-dom'
+import {CartContext} from '../../context/CartContext.js'
 
 const ItemDetail = ({id, title, thumbnail, price, description, stock}) => {
+    const [quantityAdded, setQuatintyAdded]= useState(0);
+    const {addItem} = useContext(CartContext)
+
+    const handleOnAdd = (quantity)=>{
+        setQuatintyAdded(quantity)
+
+        const item = {
+            id, title, price
+        }
+        
+        addItem(item, quantity)
+    }
+
     return(
         <div key={id} className="bg-slate-100 mx-auto max-w-2xl px-4 pb-8 pt-10 mb-4 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-6 lg:px-6 lg:pb-24 lg:pt-16">
             <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
@@ -24,7 +40,10 @@ const ItemDetail = ({id, title, thumbnail, price, description, stock}) => {
             <p className="mt-1 text-sm text-gray-500">Stock disponible: {stock}</p>
             </div>
         </div>
-        <ItemCount initial={1} stock={10} onAdd={(quantity) => console.log('cantidad agregada', quantity)} />
+        {
+            quantityAdded > 0 ? (<Link  className="mt-10 flex items-center w-64 justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" to='/cart'>Terminar compra</Link>) :
+            (<ItemCount initial={1} stock={stock} onAdd={handleOnAdd} />)
+        }
      </div>
     )
 }

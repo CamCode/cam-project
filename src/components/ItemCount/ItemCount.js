@@ -17,10 +17,10 @@ const ItemCount = ({stock, initial, onAdd}) => {
 
 return(
     <div className="Counter grid justify-items-center ">
-        <div class="btn-group flex" role="group" aria-label="Basic example">
-            <button type="button" class="w-8 rounded-l-lg bg-indigo-600 font-medium text-white hover:bg-indigo-700 focus:outline-none" onClick={decrement}>-</button>
+        <div className="btn-group flex" role="group" aria-label="Basic example">
+            <button type="button" className="w-8 rounded-l-lg bg-indigo-600 font-medium text-white hover:bg-indigo-700 focus:outline-none" onClick={decrement}>-</button>
             <h4 className="Number mx-4">{quantity}</h4>
-            <button type="button" class="w-8 rounded-r-lg bg-indigo-600 font-medium text-white hover:bg-indigo-700 focus:outline-none" onClick={increment}>+</button>
+            <button type="button" className="w-8 rounded-r-lg bg-indigo-600 font-medium text-white hover:bg-indigo-700 focus:outline-none" onClick={increment}>+</button>
         </div>
         <button
         onClick={()=> onAdd(quantity)} disabled={!stock}
