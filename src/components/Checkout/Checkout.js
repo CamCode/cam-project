@@ -1,4 +1,4 @@
-import {Timestamp, addDoc, collection, documentId, getDocs, query} from 'firebase/firestore'
+import {Timestamp, addDoc, collection, documentId, getDocs, query, writeBatch, where} from 'firebase/firestore'
 import {db} from '../../services/firebase/firebaseConfig'
 
 import CheckoutForm from '../CheckoutForm/CheckoutForm'
@@ -17,31 +17,35 @@ const Checkout = () => {
         try {
             const objOrder = {
                 buyer:{
-                    name,phone, email
+                    name, phone, email
                 },
                 items: cart,
-                total: total,
                 date: Timestamp.fromDate(new Date())
             }
 
             const batch = writeBatch(db)
+
             const outOfStock = []
+
             const ids = cart.map(prod => prod.id)
+
             const productsRef = collection(db, 'products')
-            const productsAddedFromFirestore= await (getDocs(query(productsRef, where(documentId(), 'in' , ids))))
+
+            const productsAddedFromFirestore= await getDocs(query(productsRef, where(documentId(), 'in' , ids)))
+
             const { docs } = productsAddedFromFirestore
 
             docs.forEach(doc => {
                 const dataDoc = doc.data()
                 const stockDb = dataDoc.stock
 
-                const productaAddedToCart= cart.find(prod => prod.id === doc.id)
-                const prodQuantity = productaAddedToCart?.quantity
+                const productAddedToCart= cart.find(prod => prod.id === doc.id)
+                const prodQuantity = productAddedToCart?.quantity
 
                 if(stockDb >= prodQuantity){
-                    batch.update(doc.ref, {stock: stockDb- prodQuantity})
+                    batch.update(doc.ref, {stock: stockDb - prodQuantity})
                 }else {
-                    outOfStock.push({id:doc.id, ...dataDoc})
+                    outOfStock.push({ id:doc.id, ...dataDoc })
                 }
             })
 
@@ -57,9 +61,9 @@ const Checkout = () => {
                 console.log('hay productos fuera de stock')
             }
 
-        }catch (error) {
+        } catch (error) {
             console.log(error)
-        }finally{
+        } finally{
             setLoading(false)
         }
     }
