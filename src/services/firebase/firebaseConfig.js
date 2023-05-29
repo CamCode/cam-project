@@ -6,12 +6,12 @@ import {getFirestore} from 'firebase/firestore'
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyD4_rnEi0ddgo1nDDgeDdlxgi7Yw-3Py1Q",
+  apiKey: ,
   authDomain: "mi-e-commerce.firebaseapp.com",
   projectId: "mi-e-commerce",
   storageBucket: "mi-e-commerce.appspot.com",
-  messagingSenderId: "531896142537",
-  appId: "1:531896142537:web:5620af4f0b7508f7e29b18"
+  messagingSenderId:,
+  appId: 
 };
 
 // Initialize Firebase
